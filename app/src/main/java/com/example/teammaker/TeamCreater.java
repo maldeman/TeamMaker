@@ -10,11 +10,13 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 
 public class TeamCreater extends AppCompatActivity {
 private ArrayList<ArrayList<String>> teams;
 private ArrayList<String>players;
+ private ArrayList<String>players1;
 private ArrayAdapter<String>adapter;
 private ListView listview;
 private EditText edittext;
@@ -26,36 +28,44 @@ private Intent recieve;
         listview = findViewById(R.id.listview);
         teams = new ArrayList<ArrayList<String>>();
         players = new ArrayList<>();
-        adapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1,players);
+        players1 = new ArrayList<>();
+        adapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1,players1);
 
         edittext = findViewById(R.id.editTextTextPersonName2);
         recieve = getIntent();
 
     }
 
-    public void makeTeams(View view){
-        Random random = new Random();
+    public void makeTeams(View view) {
         String numberString =(String) edittext.getText().toString();
-        Integer number = Integer.parseInt(numberString);
-        int randomNumb =(int) (Math.random()*(number-1))+1;
-        int teamSize = recieve.getExtras().getStringArrayList("players").size()/number;
-        int allPlayers = recieve.getExtras().getStringArrayList("players").size();
+        Integer amountofteams = Integer.parseInt(numberString);
+        int teamsize = recieve.getExtras().getStringArrayList("players").size()/amountofteams;
+        // Error checking
 
-        for (int i = 0; i < number; i++) {
+        for (String person:recieve.getExtras().getStringArrayList("players")){
+            players.add(person);
+        }
+
+        if (teamsize * amountofteams > players.size()) {
+            System.out.println("Error: Not enough players to form the specified number of teams with the specified team size.");
+            return;
+        }
+
+        // Shuffle the players
+        Collections.shuffle(players);
+
+        // Create an ArrayList to store the teams
+        for (int i = 0; i < amountofteams; i++) {
             teams.add(new ArrayList<String>());
         }
 
-        for (String person:recieve.getExtras().getStringArrayList("players")) {
-            if (teams.get(randomNumb).size()<teamSize) {
-                teams.get(randomNumb).add(randomNumb + person);
-            } else {
-                randomNumb = (randomNumb+1)%number;
-                teams.get(randomNumb).add(randomNumb + person);
-            }
+        // Distribute the players into the teams
+        for (int i = 0; i < players.size(); i++) {
+            int teamIndex = i % amountofteams;
+            teams.get(teamIndex).add(players.get(i));
         }
-
-        for (int i = 0; i < teams.size(); i++) {
-            players.add(teams.get(i).toString());
+        for (int i = 0; i <teams.size() ; i++) {
+            players1.add(teams.get(i).toString());
         }
 
         listview.setAdapter(adapter);
@@ -67,9 +77,14 @@ private Intent recieve;
             teams.remove(teams.get(i));
         }
 
+        for (int i = 0; i < players1.size(); i++) {
+            players1.remove(players1.get(i));
+        }
+
         for (int i = 0; i < players.size(); i++) {
             players.remove(players.get(i));
         }
+
         listview.setAdapter(adapter);
 
     }

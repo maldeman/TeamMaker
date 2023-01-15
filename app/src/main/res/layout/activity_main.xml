@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#B17A1C"
+    android:background="#9CBABA"
     tools:context=".MainActivity">
 
 
@@ -23,8 +23,8 @@
 
     <ListView
         android:id="@+id/listview"
-        android:layout_width="409dp"
-        android:layout_height="480dp"
+        android:layout_width="393dp"
+        android:layout_height="473dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -35,9 +35,11 @@
         android:id="@+id/personname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:backgroundTint="#0B0A0A"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Name"
+        android:textColor="#0A0B0A"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
