@@ -72,7 +72,7 @@ private Intent recieve;
         adapter.notifyDataSetChanged();
     }
 
-    public void newTeam(View view){
+    public void resetTeam(View view){
         for (int i = 0; i <teams.size() ; i++) {
             teams.remove(teams.get(i));
         }
