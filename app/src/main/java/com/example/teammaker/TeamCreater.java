@@ -73,17 +73,14 @@ private Intent recieve;
     }
 
     public void resetTeam(View view){
-        for (int i = 0; i <teams.size() ; i++) {
-            teams.remove(teams.get(i));
-        }
 
-        for (int i = 0; i < players1.size(); i++) {
-            players1.remove(players1.get(i));
-        }
+        teams.clear();
 
-        for (int i = 0; i < players.size(); i++) {
-            players.remove(players.get(i));
-        }
+
+        players1.clear();
+
+        players.clear();
+
 
         listview.setAdapter(adapter);
 
